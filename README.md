@@ -127,5 +127,3 @@ The frontend interacts with the smart contract through ethers.js and provides th
 This project is licensed under the MIT License.
 
 ---
-
-Feel free to modify this `README.md` to fit your project's unique requirements.
