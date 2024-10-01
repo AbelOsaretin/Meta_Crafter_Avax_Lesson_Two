@@ -48,9 +48,25 @@ To run this application, you need:
 
 ## How to Use
 
-- **Add Task**: Enter a new task in the input field and click **Add Task**.
-- **Complete Task**: Click on the **Complete** button next to any task to mark it as done.
-- **View Tasks**: All tasks (completed or not) are listed, and completed tasks will be struck through.
+This will launch the app in your default browser.
+
+### Step 1: Connect Your Wallet
+
+Once the application is running, you can interact with it:
+
+1. **Connect Wallet**: Click on the "Connect Wallet" button to connect your MetaMask wallet. Once connected, the button will display your wallet address.
+
+### Step 2: Deposit and Withdraw Funds
+
+- **Deposit Ether**: Enter an amount in ETH and click the "Deposit Ether" button to deposit Ether into the contract.
+- **Deposit ERC20**: Enter an amount of ERC20 tokens and click the "Deposit ERC20" button to deposit tokens into the contract.
+- **Withdraw Ether**: Click the "Withdraw Ether" button to withdraw your Ether from the contract.
+- **Withdraw ERC20**: Click the "Withdraw ERC20" button to withdraw your ERC20 tokens from the contract.
+
+### Step 3: Check Balances
+
+- **Ether Balance**: Click the "Get Ether Balance" button to view the Ether balance in the contract.
+- **ERC20 Balance**: Click the "Get ERC20 Balance" button to view the ERC20 token balance in the contract.
 
 ---
 
