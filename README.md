@@ -1,93 +1,126 @@
-Here’s a combined **README** file for both the **TodoList Smart Contract** and the **React Frontend**:
+# Investment Contract Frontend and Smart Contract
 
----
+## Overview
 
-# TodoList DApp
+This project consists of a smart contract and a frontend application that allow users to invest either Ether or ERC20 tokens in an investment contract, withdraw their deposits along with earned interest, and view their balance.
 
-This is a decentralized application (DApp) that allows users to manage a to-do list on the Ethereum blockchain. The project includes a **TodoList** smart contract for handling tasks on-chain and a **React frontend** to interact with the contract.
+### Smart Contract (`Investment.sol`)
 
-## Features
+The `Investment` smart contract is an Ethereum-based contract that allows:
 
-- **Add tasks** to the to-do list.
-- **Mark tasks as completed**.
-- **View the task list** with the current status of each task.
+- Users (Investors) to deposit Ether or ERC20 tokens.
+- Investors to withdraw their Ether or ERC20 deposits along with interest earned over time.
+- Admins to manage investors.
+- A SuperAdmin to manage admins and set global interest rates.
+
+The contract tracks user deposits and calculates rewards based on the duration of the investment.
+
+### Frontend (`App.js`)
+
+The frontend is built using React and ethers.js to interact with the smart contract. It provides an easy-to-use interface for investors to:
+
+- Connect their Ethereum wallet (e.g., MetaMask).
+- Deposit Ether or ERC20 tokens.
+- Withdraw their deposits.
+- Check their balance of Ether and ERC20 tokens.
 
 ## Prerequisites
 
-To run this DApp, you will need:
+- **Node.js**: Ensure you have Node.js installed to run the frontend application.
+- **MetaMask**: An Ethereum wallet browser extension for testing the application.
+- **Ethereum Testnet**: Deploy the smart contract to a test network (like Goerli or Sepolia) or a local blockchain (e.g., Ganache).
+- **ERC20 Token**: You must specify an ERC20 token's address when deploying the contract.
 
-- **Node.js** and **npm** installed.
-- **MetaMask** or another web3-compatible wallet.
-- A deployed instance of the **TodoList** smart contract.
-- An Ethereum development environment such as Hardhat, Truffle, or Remix.
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/AbelOsaretin/Meta_Crafter_Avax_Lesson_Two.git
+cd frontend
+```
+
+### 2. Install Dependencies
+
+```bash
+yarn
+```
+
+### 3. Configure Smart Contract
+
+Ensure that the `contractAddress` in the frontend matches the deployed address of your `Investment` contract.
+
+### 4. Run the Frontend
+
+```bash
+yarn start
+```
+
+This command will start the frontend React application and open it in your browser.
 
 ## Smart Contract Overview
 
-The **TodoList** smart contract manages the to-do list on the blockchain. It allows users to:
+The `Investment.sol` smart contract includes the following key functionalities:
 
-- Add tasks using the `addTask` function.
-- Mark tasks as completed using the `completeTask` function.
-- Retrieve tasks and their completion statuses using the `getTask` function.
+### Contract Structure
 
-### Contract Functions:
+- **State Variables**:
 
-1. **addTask(string \_task)**: Adds a new task to the list.
-2. **completeTask(uint \_index)**: Marks a task as completed by its index.
-3. **getTask(uint \_index)**: Returns the task and its completion status.
-4. **getTaskCount()**: Returns the total number of tasks.
+  - `BalancesEthers` and `BalancesERC20`: Stores each investor's deposited Ether or ERC20 tokens.
+  - `WithdrawnDepositAndRewardEthers` and `WithdrawnDepositAndRewardERC20`: Keeps track of how much an investor has withdrawn including interest.
+  - `DepositTimeEthers` and `DepositTimeERC20`: Timestamp of when the user made the deposit, used to calculate interest.
+  - `interestRate`: Defines the rate of interest, which is set by the SuperAdmin.
 
-### Deploy
+- **Roles**:
+  - **SuperAdmin**: Has the highest privilege, capable of managing admins and setting the global interest rate.
+  - **Admin**: Has the ability to add or remove investors.
+  - **Investor**: Users who can deposit Ether or ERC20 tokens and withdraw their investments.
 
-```shell
-$ forge script script/TodoList.s.sol:TodoListScript--rpc-url <your_rpc_url> --private-key <your_private_key> --broadcast
-```
+### Functions
 
-## React Frontend Overview
+1. **setAdmin(address \_admin)**: Assigns admin privileges.
+2. **addInvestor(address \_investor)**: Adds a new investor.
+3. **addInvestmentEthers()**: Investors can deposit Ether.
+4. **addInvestmentERC20(uint256 \_amount)**: Investors can deposit ERC20 tokens.
+5. **withdrawInvestmentEthers()**: Allows investors to withdraw their Ether and interest.
+6. **withdrawInvestmentERC20()**: Allows investors to withdraw their ERC20 tokens and interest.
+7. **calculateRewardEthers(address \_user)** and **calculateRewardERC20(address \_user)**: Internal functions that calculate the interest earned by investors.
+8. **getInvestmentEthers()** and **getInvestmentERC20()**: Functions to get the investor's balance.
+9. **setInterestRate(uint256 \_interestRate)**: Sets the interest rate for investments.
 
-The React frontend interacts with the **TodoList** smart contract using **ethers.js**. It allows users to add tasks, mark them as completed, and view the list of tasks with their completion status.
+## Frontend Overview
 
-### Setup Instructions:
+The frontend interacts with the smart contract through ethers.js and provides the following functionality:
 
-1. **Clone the Repository**:
+1. **Connect Wallet**: Connects to the user's Ethereum wallet using MetaMask.
+2. **Deposit Ether**: Allows the user to deposit Ether into the investment contract.
+3. **Deposit ERC20 Tokens**: Allows the user to deposit ERC20 tokens into the contract.
+4. **Withdraw Ether**: Allows the user to withdraw their Ether and interest from the contract.
+5. **Withdraw ERC20 Tokens**: Allows the user to withdraw their ERC20 tokens and interest from the contract.
+6. **Check Balances**: The user can check their Ether or ERC20 balance in the contract.
 
-   ```bash
-   git clone https://github.com/AbelOsaretin/Meta_Crafter_Avax_Lesson_Two.git
+### Example UI Structure
 
-   cd frontend
-   ```
+- **Connect Wallet**: Button to connect to MetaMask.
+- **Deposit Ether**: Input field to enter the Ether amount and a button to deposit.
+- **Deposit ERC20**: Input field to enter the ERC20 token amount and a button to deposit.
+- **Withdraw Ether**: Button to withdraw Ether and interest.
+- **Withdraw ERC20**: Button to withdraw ERC20 tokens and interest.
+- **Check Balances**: Buttons to check and display the user's balance for Ether and ERC20 tokens.
 
-2. **Install Dependencies**:
-   Install the required dependencies for the React frontend:
+## Smart Contract Deployment
 
-   ```bash
-   yarn
-   ```
+1. Compile the smart contract using a Solidity compiler (like Remix or Hardhat).
+2. Deploy the contract to a testnet (e.g., Goerli, Sepolia) or a local blockchain (Ganache).
+3. Note the deployed contract address and update the `contractAddress` in the `App.js` file.
 
-3. **Configure Contract Address**:
-   In the `App.js` file, replace `YOUR_CONTRACT_ADDRESS` with the deployed address of your **TodoList** smart contract.
+## Usage
 
-4. **Run the Frontend**:
-   Start the React development server:
-
-   ```bash
-   yarn start
-   ```
-
-5. **Interact with the DApp**:
-   Open your browser at `http://localhost:3000`, connect your MetaMask to the appropriate network, and interact with the to-do list.
-
-### How to Use:
-
-- **Add Task**: Enter a task in the input field and click **Add Task**.
-- **Mark Task as Completed**: Click on **Complete** next to the task to mark it as done.
-- **View Tasks**: All tasks are displayed with their status (completed tasks are shown with a strikethrough).
-
-## Tech Stack:
-
-- **Solidity**: Smart contract development language.
-- **Ethers.js**: JavaScript library for interacting with the Ethereum blockchain.
-- **React**: Frontend JavaScript framework for building the user interface.
-- **MetaMask**: Web3 wallet for interacting with the blockchain.
+1. **Connect Wallet**: Click the "Connect Wallet" button to connect your MetaMask wallet.
+2. **Deposit Ether**: Enter the amount of Ether you want to deposit and click "Deposit Ether".
+3. **Deposit ERC20**: Enter the amount of ERC20 tokens you want to deposit and click "Deposit ERC20".
+4. **Withdraw Ether/Token**: Use the respective buttons to withdraw your investment and interest.
+5. **Check Balances**: View your current Ether and ERC20 balance stored in the contract.
 
 ## License
 
@@ -95,4 +128,4 @@ This project is licensed under the MIT License.
 
 ---
 
-By following the steps in this README, you should be able to deploy the smart contract and run the React frontend to interact with it.
+Feel free to modify this `README.md` to fit your project's unique requirements.
